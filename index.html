@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>כמה זמן נשאר לגילי</title>
+    <style>
+        body { 
+            font-family: system-ui, -apple-system, sans-serif; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            margin: 0; 
+            background-color: #f3f4f6; 
+            color: #333; 
+        }
+        .container { 
+            text-align: center; 
+            background: white; 
+            padding: 2.5rem; 
+            border-radius: 1rem; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+            width: 90%; 
+            max-width: 400px; 
+        }
+        img { 
+            width: 140px; 
+            height: 140px; 
+            border-radius: 50%; 
+            object-fit: cover; 
+            margin-bottom: 1rem; 
+            background-color: #e5e7eb; 
+            border: 4px solid #3b82f6; 
+        }
+        h1 { 
+            margin-bottom: 1rem; 
+            font-size: 1.8rem; 
+            color: #111827;
+        }
+        .timer { 
+            font-size: 3.5rem; 
+            font-weight: bold; 
+            margin: 1.5rem 0; 
+            color: #1f2937; 
+            font-variant-numeric: tabular-nums;
+        }
+        .buttons { 
+            display: flex; 
+            gap: 1rem; 
+            justify-content: center; 
+        }
+        button { 
+            padding: 0.75rem 2rem; 
+            font-size: 1.2rem; 
+            font-weight: bold;
+            border: none; 
+            border-radius: 0.5rem; 
+            cursor: pointer; 
+            transition: all 0.2s; 
+        }
+        .btn-20 { background: #3b82f6; color: white; }
+        .btn-21 { background: #10b981; color: white; }
+        button:hover { opacity: 0.85; transform: translateY(-2px); }
+        #status {
+            margin-top: 1.5rem;
+            color: #6b7280;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="placeholder.jpg" alt="גילי" id="profile-img">
+        
+        <h1>כמה זמן נשאר לגילי</h1>
+        
+        <div class="timer" id="display">00:00:00</div>
+        
+        <div class="buttons">
+            <button class="btn-20" onclick="setTarget(20, 0)">20:00</button>
+            <button class="btn-21" onclick="setTarget(21, 40)">21:40</button>
+        </div>
+        
+        <div id="status"></div>
+    </div>
+
+    <script>
+        let targetDate = null;
+        let timerInterval = null;
+
+        function setTarget(hours, minutes) {
+            const now = new Date();
+            targetDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, 0);
+
+            // אם השעה המבוקשת כבר עברה היום, הספירה תכוון למחר באותה שעה
+            if (targetDate < now) {
+                targetDate.setDate(targetDate.getDate() + 1);
+            }
+
+            const minString = minutes === 0 ? '00' : minutes;
+            document.getElementById('status').innerText = `יעד נוכחי: ${hours}:${minString}`;
+            
+            updateTimer();
+            clearInterval(timerInterval);
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        function updateTimer() {
+            if (!targetDate) return;
+            const now = new Date();
+            const diff = targetDate - now;
+
+            if (diff <= 0) {
+                document.getElementById('display').innerText = "00:00:00";
+                document.getElementById('status').innerText = "המשמרת הסתיימה!";
+                clearInterval(timerInterval);
+                return;
+            }
+
+            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+            const format = (num) => num.toString().padStart(2, '0');
+            document.getElementById('display').innerText = `${format(h)}:${format(m)}:${format(s)}`;
+        }
+
+        // הגדרת ברירת מחדל ל-20:00 בעת טעינת העמוד
+        setTarget(20, 0);
+    </script>
+</body>
+</html>
