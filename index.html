@@ -101,7 +101,7 @@
 <body>
     <div class="container">
         <div id="profile-container">
-            <img src="gili.jpeg" alt="גילי" id="profile-img" onerror="this.style.display='none'">
+            <img src="Gili.jpeg" alt="גילי" id="profile-img" onerror="this.style.display='none'">
             <div id="emojis-orbit" class="emoji-circle"></div>
         </div>
         
@@ -118,7 +118,6 @@
     </div>
 
     <script>
-        // ניהול הטיימר
         let targetDate = null;
         let timerInterval = null;
 
@@ -160,7 +159,6 @@
 
         setTarget(20, 0);
 
-        // הוספת אימוג׳ים מסתובבים בצורה חלקה
         function addOrbingEmojis() {
             const emojis = ['🍱', '🍷', '🏠', '🕶️'];
             const container = document.getElementById('emojis-orbit');
@@ -180,7 +178,7 @@
                 emojiSpan.style.left = `${x}px`;
                 emojiSpan.style.top = `${y}px`;
 
-                const duration = 12; // זמן הקפה בשניות
+                const duration = 12; 
                 emojiSpan.style.animation = `orbit ${duration}s linear infinite`;
                 emojiSpan.style.transformOrigin = `-${orbitRadius}px -${orbitRadius}px`;
                 
