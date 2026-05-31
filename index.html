@@ -4,270 +4,191 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>כמה זמן נשאר לגילי</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700&display=swap" rel="stylesheet">
-    
     <style>
-        :root {
-            --primary-color: #ff6b6b; /* Redish for timer and finish */
-            --button-color: #4ecdc4; /* Cyan for buttons */
-            --bg-color: #f7f9fc;
-            --text-color: #333;
+        body { 
+            font-family: system-ui, -apple-system, sans-serif; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            margin: 0; 
+            background-color: #f3f4f6; 
+            color: #333; 
+            overflow: hidden;
         }
-
-        body {
-            font-family: 'Heebo', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        .main-container {
-            background-color: white;
-            padding: 3rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            width: 90%;
-            max-width: 500px;
+        .container { 
+            text-align: center; 
+            background: white; 
+            padding: 2.5rem; 
+            border-radius: 1rem; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+            width: 90%; 
+            max-width: 400px; 
             position: relative;
         }
-
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
-            color: #333;
-        }
-
-        /* Image and Emoji Wrapper */
-        .image-wrapper {
+        #profile-container {
             position: relative;
-            width: 180px;
-            height: 180px;
-            margin: 0 auto 2rem auto;
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 1.5rem auto;
         }
-
-        img#gili-avatar {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 5px solid white;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s;
-            background-color: #eee; /* Placeholder before image loads */
+        img#profile-img { 
+            width: 140px; 
+            height: 140px; 
+            border-radius: 50%; 
+            object-fit: cover; 
+            position: relative; 
+            z-index: 2; 
+            border: 4px solid #3b82f6;
+            background-color: #e5e7eb;
         }
-
-        /* Emoji Spinner Layer */
-        .emoji-spinner {
+        .emoji-circle {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            animation: spinOrbit 20s linear infinite;
+            width: 200px;
+            height: 200px;
+            left: -30px; 
+            top: -30px;
+            pointer-events: none; 
+            z-index: 1; 
         }
-
         .emoji {
-            font-size: 2rem;
+            font-size: 1.5rem;
             position: absolute;
-            /* Adjust individual emoji positions to orbit the center */
+            transform-origin: center;
         }
-
-        /* Keyframes for orbiting spinner */
-        @keyframes spinOrbit {
+        @keyframes orbit {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
-
-        .timer-display {
-            font-size: 4rem;
-            font-weight: 700;
-            margin-bottom: 2rem;
-            color: var(--primary-color);
-            /* Font-family for mono-space look for time */
-            font-family: 'Courier New', Courier, monospace;
+        h1 { 
+            margin-bottom: 1rem; 
+            font-size: 1.8rem; 
+            color: #111827;
         }
-
-        .button-group {
-            display: flex;
-            gap: 1.5rem;
-            justify-content: center;
+        .timer { 
+            font-size: 3.5rem; 
+            font-weight: bold; 
+            margin: 1.5rem 0; 
+            color: #1f2937; 
+            font-variant-numeric: tabular-nums;
+            direction: ltr;
         }
-
-        .time-button {
-            padding: 1rem 2rem;
-            font-size: 1.5rem;
-            font-weight: 700;
-            background-color: var(--button-color);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        .buttons { 
+            display: flex; 
+            gap: 1rem; 
+            justify-content: center; 
+            margin-bottom: 1rem;
         }
-
-        .time-button:hover {
-            background-color: #3bada0;
-            transform: translateY(-2px);
+        button { 
+            padding: 0.75rem 2rem; 
+            font-size: 1.2rem; 
+            font-weight: bold;
+            border: none; 
+            border-radius: 0.5rem; 
+            cursor: pointer; 
+            transition: all 0.2s; 
         }
-
-        .time-button:active {
-            transform: translateY(0px);
-        }
-
-        .note {
-            margin-top: 2rem;
-            color: #777;
-            font-style: italic;
-        }
-
-        /* Message when time is up */
-        .finish-message {
-            display: none;
-            font-size: 2rem;
-            color: var(--primary-color);
-            margin-top: 1rem;
+        .btn-20 { background: #3b82f6; color: white; }
+        .btn-21 { background: #10b981; color: white; }
+        button:hover { opacity: 0.85; transform: translateY(-2px); }
+        #status {
+            color: #6b7280;
+            font-size: 1.1rem;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <div class="main-container">
+    <div class="container">
+        <div id="profile-container">
+            <img src="gili.jpeg" alt="גילי" id="profile-img" onerror="this.style.display='none'">
+            <div id="emojis-orbit" class="emoji-circle"></div>
+        </div>
+        
         <h1>כמה זמן נשאר לגילי</h1>
         
-        <div class="image-wrapper">
-            <img id="gili-avatar" src="" alt="גילי"> <div class="emoji-spinner">
-                </div>
-        </div>
-
-        <div class="timer-display" id="timer">00:00:00</div>
+        <div class="timer" id="display">00:00:00</div>
         
-        <div class="button-group">
-            <button class="time-button" onclick="setEndTime(20, 0)">20:00</button>
-            <button class="time-button" onclick="setEndTime(21, 40)">21:40</button>
+        <div class="buttons">
+            <button class="btn-20" onclick="setTarget(20, 0)">20:00</button>
+            <button class="btn-21" onclick="setTarget(21, 40)">21:40</button>
         </div>
-
-        <p class="note">זו ספירה לאחור לסיום המשמרת של גילי!</p>
-        <p class="finish-message" id="finish-msg">המשמרת הסתיימה! 🎉</p>
+        
+        <div id="status"></div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/heic2any@0.2.1/dist/heic2any.min.js"></script>
-
     <script>
-        // 1. Handle HEIC Image Decoding
-        async function loadHeicImage() {
-            try {
-                // Fetch the HEIC file
-                const response = await fetch('Gili.HEIC');
-                if (!response.ok) throw new Error('Could not fetch Gili.HEIC. Check filename and path.');
-                const blob = await response.blob();
+        // ניהול הטיימר
+        let targetDate = null;
+        let timerInterval = null;
 
-                // Decode HEIC to JPEG/PNG Blob
-                const convertedBlob = await heic2any({ blob, toType: "image/jpeg" });
-
-                // Create a temporary URL for the converted image and assign to <img>
-                const imageUrl = URL.createObjectURL(convertedBlob);
-                document.getElementById('gili-avatar').src = imageUrl;
-            } catch (error) {
-                console.error("HEIC loading error:", error);
-                // Optional: Fallback to a default image if loading fails
-                document.getElementById('gili-avatar').src = 'data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D"http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" viewBox%3D"0 0 24 24"%3E%3Cpath d%3D"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08s5.97 1.09 6 3.08c-1.29 1.94-3.5 3.22-6 3.22z"%2F%3E%3C%2Fsvg%3E';
-            }
-        }
-        loadHeicImage();
-
-        // 2. Add Orbiting Emojis
-        const emojis = ['🍱', '🍷', '🏠', '🕶️'];
-        const spinner = document.querySelector('.emoji-spinner');
-        
-        emojis.forEach((emoji, index) => {
-            const span = document.createElement('span');
-            span.className = 'emoji';
-            span.innerText = emoji;
-            
-            // Distribute emojis evenly along the orbit
-            const angle = (360 / emojis.length) * index;
-            // Radius of the orbit (half the width of image-wrapper)
-            const radius = 90;
-            // Position using absolute placement
-            span.style.left = `calc(50% + ${radius}px * cos(${angle}deg) - 1rem)`; // Center emoji on path
-            span.style.top = `calc(50% + ${radius}px * sin(${angle}deg) - 1rem)`;
-
-            spinner.appendChild(span);
-        });
-
-        // 3. Countdown Timer Logic
-        let endTime = null;
-        let countdownInterval;
-
-        function updateTimerDisplay() {
-            const timerElement = document.getElementById('timer');
-            const finishMsgElement = document.getElementById('finish-msg');
-            const noteElement = document.querySelector('.note');
-
-            if (!endTime) return;
-
+        function setTarget(hours, minutes) {
             const now = new Date();
-            const timeRemaining = endTime - now;
+            targetDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, 0);
 
-            if (timeRemaining <= 0) {
-                // Time's up!
-                timerElement.innerText = "00:00:00";
-                finishMsgElement.style.display = 'block';
-                noteElement.style.display = 'none';
-                clearInterval(countdownInterval);
+            if (targetDate < now) {
+                targetDate.setDate(targetDate.getDate() + 1);
+            }
+
+            const minString = minutes === 0 ? '00' : minutes;
+            document.getElementById('status').innerText = `יעד נוכחי: ${hours}:${minString}`;
+            
+            updateTimer();
+            clearInterval(timerInterval);
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        function updateTimer() {
+            if (!targetDate) return;
+            const now = new Date();
+            const diff = targetDate - now;
+
+            if (diff <= 0) {
+                document.getElementById('display').innerText = "00:00:00";
+                document.getElementById('status').innerText = "המשמרת הסתיימה! גילי בדרך הביתה.";
+                clearInterval(timerInterval);
                 return;
             }
 
-            // Calculations for hours, minutes, and seconds
-            const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((diff % (1000 * 60)) / 1000);
 
-            // Format time with leading zeros
-            timerElement.innerText = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-            finishMsgElement.style.display = 'none';
-            noteElement.style.display = 'block';
+            const format = (num) => num.toString().padStart(2, '0');
+            document.getElementById('display').innerText = `${format(h)}:${format(m)}:${format(s)}`;
         }
 
-        function setEndTime(hours, minutes) {
-            const now = new Date();
-            endTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, 0);
+        setTarget(20, 0);
 
-            // If selected time has already passed today, set it to the next day
-            if (endTime < now) {
-                endTime.setDate(endTime.getDate() + 1);
-            }
+        // הוספת אימוג׳ים מסתובבים בצורה חלקה
+        function addOrbingEmojis() {
+            const emojis = ['🍱', '🍷', '🏠', '🕶️'];
+            const container = document.getElementById('emojis-orbit');
+            const numEmojis = emojis.length;
+            const orbitRadius = 100;
 
-            // Store endTime in localStorage to persist across refreshes
-            localStorage.setItem('giliEndTime', endTime.toISOString());
+            for (let i = 0; i < numEmojis; i++) {
+                const emojiSpan = document.createElement('span');
+                emojiSpan.innerText = emojis[i];
+                emojiSpan.classList.add('emoji');
+                
+                const angle = (360 / numEmojis) * i;
+                const radians = angle * (Math.PI / 180);
+                const x = orbitRadius + orbitRadius * Math.cos(radians);
+                const y = orbitRadius + orbitRadius * Math.sin(radians);
+                
+                emojiSpan.style.left = `${x}px`;
+                emojiSpan.style.top = `${y}px`;
 
-            // Start or update countdown
-            clearInterval(countdownInterval);
-            updateTimerDisplay(); // Initial display
-            countdownInterval = setInterval(updateTimerDisplay, 1000); // Update every second
-        }
-
-        // Check for previously set time on load
-        const storedEndTime = localStorage.getItem('giliEndTime');
-        if (storedEndTime) {
-            endTime = new Date(storedEndTime);
-            // If stored time has passed, don't restart countdown
-            if (endTime > new Date()) {
-                updateTimerDisplay();
-                countdownInterval = setInterval(updateTimerDisplay, 1000);
-            } else {
-                localStorage.removeItem('giliEndTime'); // Clean up old time
+                const duration = 12; // זמן הקפה בשניות
+                emojiSpan.style.animation = `orbit ${duration}s linear infinite`;
+                emojiSpan.style.transformOrigin = `-${orbitRadius}px -${orbitRadius}px`;
+                
+                container.appendChild(emojiSpan);
             }
         }
+
+        addOrbingEmojis();
     </script>
 </body>
 </html>
